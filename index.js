@@ -1,4 +1,7 @@
 const { ApolloServer, gql } = require('apollo-server');
+const mongoose = require('mongoose');
+const config = require('./config');
+
 const typeDefs = gql`
   type Query {
       sayHi: String!
@@ -16,7 +19,15 @@ const server = new ApolloServer({
   resolvers
 });
 
-server.listen({ port: 5000 })
-.then(res => {
-  console.log(`Server is running at ${res.url}`)
-});
+mongoose
+  .connect(config.mongo, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log('mongo is connected');
+    return server.listen({port: 5000})
+  })
+  .then(res => {
+    console.log(`Server is running at ${res.url}`)
+  });
