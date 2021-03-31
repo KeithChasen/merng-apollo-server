@@ -1,3 +1,3 @@
 const mongo = "";
-
-module.exports = { mongo };
+const jwtSecret = '';
+module.exports = { mongo, jwtSecret };
