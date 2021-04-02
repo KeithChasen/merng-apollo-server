@@ -6,6 +6,14 @@ const { validateRegisterInput, validateLoginInput } = require('../../utils/valid
 const { jwtSecret } = require('../../config');
 const User = require('../../models/User');
 
+const createToken = (user) => {
+  return jwt.sign({
+    id: user.id,
+    email: user.email,
+    username: user.username
+  }, jwtSecret,{ expiresIn: '1h' });
+};
+
 module.exports = {
   Mutation: {
     async login(_, { username, password }) {
@@ -32,11 +40,7 @@ module.exports = {
           errors
         })
       }
-      const token = jwt.sign({
-        id: user.id,
-        email: user.email,
-        username: user.username
-      }, jwtSecret,{ expiresIn: '1h' });
+      const token = createToken(user);
 
       return {
         ...user._doc,
@@ -82,18 +86,13 @@ module.exports = {
 
       const res = await newUser.save();
 
-      const token = jwt.sign({
-        id: res.id,
-        email: res.email,
-        username: res.username
-      }, jwtSecret,{ expiresIn: '1h' });
+      const token = createToken(res);
 
       return {
         ...res._doc,
         id: res._id,
         token
       }
-
     }
   }
 };
