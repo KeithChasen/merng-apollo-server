@@ -52,4 +52,8 @@ module.exports = gql`
         createComment(postId: ID!, commentId: ID!): Post!
         likePost(postId: ID!, username: String!): Post!
     }
+    
+    type Subscription {
+        newPost: Post!
+    }
 `;
