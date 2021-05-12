@@ -3,7 +3,10 @@ const jwt = require('jsonwebtoken');
 const { UserInputError } = require('apollo-server');
 
 const { validateRegisterInput, validateLoginInput } = require('../../utils/validators');
-const { jwtSecret } = require('../../config') || null;
+
+const fs = require('fs');
+const { jwtSecret } = fs.existsSync('../../config') ? require('../../config') : null;
+
 const User = require('../../models/User');
 
 const jwtSECRET = process.env.JWT || jwtSecret;
