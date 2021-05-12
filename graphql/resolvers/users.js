@@ -6,12 +6,14 @@ const { validateRegisterInput, validateLoginInput } = require('../../utils/valid
 const { jwtSecret } = require('../../config');
 const User = require('../../models/User');
 
+const jwtSECRET = process.env.JWT || jwtSecret;
+
 const createToken = (user) => {
   return jwt.sign({
     id: user.id,
     email: user.email,
     username: user.username
-  }, jwtSecret,{ expiresIn: '1h' });
+  }, jwtSECRET,{ expiresIn: '1h' });
 };
 
 module.exports = {

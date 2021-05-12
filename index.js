@@ -8,6 +8,7 @@ const resolvers = require('./graphql/resolvers');
 const pubsub = new PubSub();
 
 const PORT = process.env.PORT || 5000;
+const mongo = process.env.MONGO || config.mongo;
 
 const server = new ApolloServer({
   typeDefs,
@@ -16,7 +17,7 @@ const server = new ApolloServer({
 });
 
 mongoose
-  .connect(config.mongo, {
+  .connect(mongo, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
