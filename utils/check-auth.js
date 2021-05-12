@@ -2,9 +2,9 @@ const jwt = require('jsonwebtoken');
 const { AuthenticationError } = require('apollo-server');
 
 const fs = require('fs');
-const { jwtSecret } = fs.existsSync('../config') ? require('../config') : null;
+const config = fs.existsSync('../config') ? require('../config') : null;
 
-const jwtSECRET = process.env.JWT || jwtSecret;
+const jwtSECRET = process.env.JWT || config.jwtSecret;
 
 module.exports = context => {
   const authHeader = context.req.headers.authorization;

@@ -5,11 +5,11 @@ const { UserInputError } = require('apollo-server');
 const { validateRegisterInput, validateLoginInput } = require('../../utils/validators');
 
 const fs = require('fs');
-const { jwtSecret } = fs.existsSync('../../config') ? require('../../config') : null;
+const config = fs.existsSync('../../config') ? require('../../config') : null;
 
 const User = require('../../models/User');
 
-const jwtSECRET = process.env.JWT || jwtSecret;
+const jwtSECRET = process.env.JWT || config.jwtSecret;
 
 const createToken = (user) => {
   return jwt.sign({
