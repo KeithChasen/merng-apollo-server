@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { AuthenticationError } = require('apollo-server');
-const { jwtSecret } = require('../config');
+const { jwtSecret } = require('../config') || null;
 
 const jwtSECRET = process.env.JWT || jwtSecret;
 
